@@ -8,7 +8,7 @@ const ProjectList = ({projects}) => {
         return (
           <ProjectSummary project={project} key={project.id} />
         )
-      })}  
+      })}
     </div>
   )
 }
