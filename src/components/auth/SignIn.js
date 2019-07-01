@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { signIn } from '../../store/actions/authActions';
+import { Redirect } from 'react-router-dom';
 
 class SignIn extends Component {
   state = {
     email: '',
     password: ''
   }
+
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.signIn(this.state);
   }
 
   render() {
-    const { authError } = this.props;
+    const { authError, auth } = this.props;
+    if (auth.uid) {
+      return <Redirect to="/" />
+    }
 
     return (
       <div className="container">
@@ -46,6 +52,7 @@ class SignIn extends Component {
 
 const mapStateToProps = state => {
   return {
+    auth: state.firebase.auth,
     authError: state.auth.authError
   }
 }
